@@ -1,6 +1,9 @@
 # List scheduling
 
 ## Istruzioni di compilazione
+
+(Prerequisito: compilatore java)
+
 `javac listScheduling.java Operation.java Utilities.java`
 
 ---
