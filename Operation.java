@@ -21,11 +21,6 @@ public class Operation {
         return (this.name + " := " + this.input1 + " " + this.type + " " + this.input2);
     }
 
-    public String toStringWithIndexes() {
-        return (this.name + " := " + this.input1 + " " + this.type + " " + this.input2
-                + "\n" + "index1: " + this.index1 + "   index2: " + this.index2);
-    }
-
     public void load(String nameOp, String typeOp, String input1Op, String input2Op){ 
         this.name = nameOp;
         // this.type = typeOp;
