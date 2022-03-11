@@ -11,66 +11,6 @@ public class listScheduling {
     // dimensione massima di operazioni nello scheduling
     static final int DIM = 20;
 
-    /*
-    Questa funzione legge da un file di testo le operazioni da eseguire e restituisce sia un array
-    dell'oggetto Operation che il numero di righe lette dal file
-    */
-    static int loadFromFile(Operation s[], String fileName) throws FileNotFoundException, IOException {
-        // creo oggetto di tipo BufferedReader per poter leggere righe del file di configurazione
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        int i = 0;
-
-        while(true) {
-            // leggo riga
-            String line = reader.readLine();
-
-            // se readLine restituisce null sono al termine del file (EOF)
-            if (line == null) {
-                // esco dal ciclo
-                break;
-            }
-
-            // ignoro i commenti nel file (righe precedute da #) e righe vuote
-            if (line.startsWith("#") || line.isEmpty()) {
-                // passo a prossima iterazione
-                continue;
-            }
-
-            // altrimenti carico riga letta nell'array parts
-            String parts[] = line.split(" ");
-
-            s[i] = new Operation();
-            /*  ogni riga è composta da:
-                parts[0]: u0
-                parts[1]: := (non mi serve, quindi non lo considero)
-                parts[2]: a
-                parts[3]: +
-                parts[4]: b */
-            s[i].load(parts[0], parts[3], parts[2], parts[4]);
-
-            // controllo se è stato saltato un numero in un'operazione
-            if (i>0) {
-                if(Utilities.validateNum(s[i-1], s[i]) == false) {
-                    System.err.println("Error! Wrong sequence of operations!\nTerminating");
-                    System.exit(1);
-                    break;
-                }
-            }
-
-            i++;
-
-            // controllo se ho raggiunto limite dimensione dell'array
-            if (i > DIM) {
-                System.err.println("Error! Exceeded the limit of" + DIM + " operations!");
-                break;
-            }
-        }
-
-        reader.close();
-
-        return i;
-    }
-
     // Scheduling ASAP
     static int[] ASAP(Operation s[], int num_op) {
         int[] done = new int[num_op];
@@ -179,16 +119,6 @@ public class listScheduling {
         }
 
         return done;
-    }
-
-    static int[] mobilityFunc(Operation s[], int asap[], int alap[], int numOp) {
-        int[] mobility = new int[numOp];
-
-        for(int i=0; i<numOp; i++) {
-            mobility[i] = alap[i] - asap[i] + 1;
-        }
-
-        return mobility;
     }
 
     static int[] priorityScheduling(Operation s[], int numOp, int asap[], int[] priority, int nAdder, int nMolt) {
@@ -393,7 +323,7 @@ public class listScheduling {
         }
 
         try {
-            numOp = loadFromFile(list, fileName);
+            numOp = Utilities.loadFromFile(list, fileName);
 
             // stampo operazioni lette dal file
             System.out.println("\nImported " + numOp + " operations");
@@ -422,7 +352,7 @@ public class listScheduling {
 
             // dichiato array con lista delle priorità delle operazioni
             int[] priority = new int[numOp];
-            priority = mobilityFunc(list, asapScheduling, alapScheduling, numOp);
+            priority = Utilities.mobilityFunc(list, asapScheduling, alapScheduling, numOp);
 
             System.out.println("\nPriority list:");
             System.out.println(Arrays.toString(priority));
