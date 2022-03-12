@@ -22,9 +22,7 @@ public class listScheduling {
         Arrays.fill(temp, -1);
 
         for (clk=1; clk<=num_op; clk++) {
-
             for (int i=0; i<num_op; i++) {
-
                 if (done[i] != -1) {
                     // operazione già eseguita in un altro ciclo di clock.
                     // passo a prossima operazione
@@ -34,28 +32,28 @@ public class listScheduling {
                 int index1 = s[i].getIndex1();
                 int index2 = s[i].getIndex2();
 
+                // entrambi gli operandi sono variabili di ingresso, quindi si può eseguire
                 if((index1 == -1) && (index2 == -1)) {
                     temp[i] = clk;
                     continue;
                 }
 
+                // operando1 e operando2 sono già stati eseguiti entrambi
                 if((index1 != -1) && (done[index1] != -1)) {
                     if((index2 != -1) && (done[index2] != -1)) {
                         temp[i] = clk;
                         continue;
                     }
 
+                    // operando1 è già stato eseguito, mentre operando2 è una variabile di ingresso
                     if (index2 == -1) {
                         temp[i] = clk;
                         continue;
                     }
                 }
 
+                // operando1 è una variabile di ingresso, mentre operando2 è già stato eseguito
                 if ((index2 != -1) && (done[index2] != -1)) {
-                    if((index1 != -1) && (done[index1] != -1)) {
-                        temp[i] = clk;
-                        continue;
-                    }
                     if (index1 == -1) {
                         temp[i] = clk;
                         continue;
@@ -104,7 +102,7 @@ public class listScheduling {
                     int index2 = s[i].getIndex2();
 
                     if(index1 != -1){
-                        // li programmo al corrente ciclo di clock
+                        // se gli operandi non sono variabili di ingresso, li programmo al corrente ciclo di clock
                         temp[index1] = clk;
                     }
 
@@ -150,7 +148,8 @@ public class listScheduling {
         // 1 se l'operazione è pronta per essere eseguita
         // 2 se è già stata eseguita
 
-        System.out.println("\n\n#########################");
+        System.out.println("\n");
+        System.out.println("#########################");
         System.out.println("##   List scheduling   ##");
         System.out.println("#########################");
 
@@ -190,11 +189,6 @@ public class listScheduling {
 
                 if((index2 != -1) && (ready[index2] == 2)) {
                     if(index1 == -1) {
-                        temp[i] = 1;
-                        continue;
-                    }
-
-                    if((index1 != -1) && (ready[index1] == 2)) {
                         temp[i] = 1;
                         continue;
                     }
@@ -239,6 +233,7 @@ public class listScheduling {
                 }
             }
 
+            // stampo vettore add
             System.out.println("adder: " + Arrays.toString(add));
 
             // al termine devo segnare sul vettore ready le operazioni che ho eseguito
@@ -275,6 +270,7 @@ public class listScheduling {
                 }
             }
 
+            // stampo vettore molt
             System.out.println("molt: " + Arrays.toString(molt));
 
             // segno le moltiplicazioni eseguite sul vettore ready
@@ -319,6 +315,16 @@ public class listScheduling {
         // controllo degli argomenti
         if (args.length != 2) {
             System.err.println("Error! Usage: java listBased N_adder N_multiplier");
+            System.exit(1);
+        }
+
+        else if (Integer.parseInt(args[0]) <= 0) {
+            System.err.println("Error! N_adder must be at least 1!");
+            System.exit(1);
+        }
+        
+        else if (Integer.parseInt(args[1]) <= 0) {
+            System.err.println("Error! N_mult must be at least 1!");
             System.exit(1);
         }
 

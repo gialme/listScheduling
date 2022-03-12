@@ -1,3 +1,5 @@
+// File con diverse funzioni utilizzate nel progetto
+
 import java.io.*;
 
 public class Utilities {
