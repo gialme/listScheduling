@@ -120,4 +120,16 @@ public class Utilities {
             return false;
         }
     }
+
+    // funzione che stampa tutti gli elementi di un array diversi da -1
+    public static void printResource (int[] arr) {
+        System.out.print(" [ ");
+        for (int i=0; i<arr.length; i++) {
+            if(arr[i] != -1) {
+                System.out.print("u" +arr[i] + " ");
+            }
+        }
+        System.out.print("]");
+        System.out.println();
+    }
 }

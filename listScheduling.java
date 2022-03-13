@@ -234,7 +234,9 @@ public class listScheduling {
             }
 
             // stampo vettore add
-            System.out.println("adder: " + Arrays.toString(add));
+            // non voglio stampare gli elementi vuoti del vettore
+            System.out.print("adder: ");
+            Utilities.printResource(add);
 
             // al termine devo segnare sul vettore ready le operazioni che ho eseguito
             for (int i=0; i<nAdder; i++) {
@@ -271,7 +273,9 @@ public class listScheduling {
             }
 
             // stampo vettore molt
-            System.out.println("molt: " + Arrays.toString(molt));
+            // non voglio stampare gli elementi vuoti del vettore
+            System.out.print("molt: ");
+            Utilities.printResource(molt);
 
             // segno le moltiplicazioni eseguite sul vettore ready
             for (int i=0; i<nMolt; i++) {
