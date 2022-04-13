@@ -318,7 +318,7 @@ public class listScheduling {
 
         // controllo degli argomenti
         if (args.length != 2) {
-            System.err.println("Error! Usage: java listBased N_adder N_multiplier");
+            System.err.println("Error! Usage: java listScheduling N_adder N_multiplier");
             System.exit(1);
         }
 
